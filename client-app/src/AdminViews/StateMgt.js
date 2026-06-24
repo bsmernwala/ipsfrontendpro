@@ -9,6 +9,8 @@ function StateMgt()
     const[status,setStatus]=useState();
     const [stlist,setStlist]=useState([]); //create an array to store state data
 
+    const REACT_APP_BASE_API_URL=process.env.REACT_APP_BASE_API_URL;
+
     const handleStIdText=(evt)=>{
         setStId(evt.target.value);
     }
@@ -24,7 +26,7 @@ function StateMgt()
             stname:stname,
             status:1
         };
-        axios.post("http://localhost:9191/state/save",obj).then(res=>{
+        axios.post(REACT_APP_BASE_API_URL+"/state/save",obj).then(res=>{
             alert("Data Saved");
             setStId("");
             setStName("");
@@ -42,14 +44,14 @@ function StateMgt()
     //     })
     // })  
     const handleShowButton=()=>{
-          axios.get("http://localhost:9191/state/getall").then((res)=>{
+          axios.get(REACT_APP_BASE_API_URL+"/state/getall").then((res)=>{
             setStlist(res.data);
         }).catch((err)=>{
             alert(err);
         })
     }
     const handleSearchButton=()=>{
-        axios.get("http://localhost:9191/state/search/"+stid).then((res)=>{
+        axios.get(REACT_APP_BASE_API_URL+"/state/search/"+stid).then((res)=>{
             setStName(res.data.stname);
             setStatus(res.data.status);
         }).catch((err)=>{
@@ -57,7 +59,7 @@ function StateMgt()
         })
     }
    const handleNewButton=()=>{
-             axios.get("http://localhost:9191/state/getall").then((res)=>{
+             axios.get(REACT_APP_BASE_API_URL+"/state/getall").then((res)=>{
             //alert(res.data.length);
             var nextStId=res.data.length+1
             setStId(nextStId);
@@ -72,7 +74,7 @@ function StateMgt()
             stname:stname,
             status:status
         };
-    axios.put("http://localhost:9191/state/update",obj).then(res=>{
+    axios.put(REACT_APP_BASE_API_URL+"/state/update",obj).then(res=>{
             alert("Data Updated");
             setStId("");
             setStName("");
@@ -84,7 +86,7 @@ function StateMgt()
    
    
    const handleDeleteButton=()=>{
-    axios.delete("http://localhost:9191/state/delete/"+stid).then(res=>{
+    axios.delete(REACT_APP_BASE_API_URL+"/state/delete/"+stid).then(res=>{
             alert("Data Deleted");
             setStId("");
             setStName("");

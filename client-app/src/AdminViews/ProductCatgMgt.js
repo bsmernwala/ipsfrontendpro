@@ -7,14 +7,14 @@ function ProductCatgMgt() {
     const [pcatgname, setPCatgName] = useState("");
     const [pcatgList, setPCatgList] = useState([]);
     const [isEditMode, setIsEditMode] = useState(false); // Edit state
- 
+ const REACT_APP_BASE_API_URL=process.env.REACT_APP_BASE_API_URL; 
 
     useEffect(() => {
         fetchCategoryList();
     }, []);
 
     const fetchCategoryList = () => {
-        axios.get("http://localhost:9191/productcatg/showproductcatg")
+        axios.get(REACT_APP_BASE_API_URL+"/productcatg/showproductcatg")
             .then((res) => {
                 setPCatgList(res.data);
                 if (!isEditMode) {
@@ -30,7 +30,7 @@ function ProductCatgMgt() {
             return;
         }
 
-        axios.post("http://localhost:9191/productcatg/addproductcatg/"+pcatgid+"/"+pcatgname)
+        axios.post(REACT_APP_BASE_API_URL+"/productcatg/addproductcatg/"+pcatgid+"/"+pcatgname)
             .then((res) => {
                 alert(res.data);
                 setPCatgName("");
@@ -46,7 +46,7 @@ function ProductCatgMgt() {
             return;
         }
 
-        axios.put("http://localhost:9191/productcatg/updateproductcatg/"+pcatgid+"/"+pcatgname)
+        axios.put(REACT_APP_BASE_API_URL+"/productcatg/updateproductcatg/"+pcatgid+"/"+pcatgname)
             .then((res) => {
                 alert(res.data);
                 setPCatgName("");
